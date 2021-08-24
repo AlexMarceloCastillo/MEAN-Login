@@ -1,0 +1,45 @@
+<div class="container mr-auto col-6 mt-5">
+  <form [formGroup]="signInForm" (ngSubmit)="onSignIn()">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input [ngClass]="{'is-valid':email?.touched && !email?.invalid,'is-invalid':email?.touched && email?.invalid}" type="email" class="form-control" formControlName="email" id="email" placeholder="Enter email">
+      <div class="alert-danger mr-auto ml-auto" *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+        <div class="container-error-message" *ngIf="email?.errors?.required">
+          El email es requerido
+        </div>
+        <div class="container-error-message" *ngIf="email?.errors?.minlength">
+          El email debe ser de al menos 8 caracteres
+        </div>
+        <div class="container-error-message" *ngIf="email?.errors?.maxlength">
+          El email tiene un maximo de 50 caracteres
+        </div>
+        <div class="container-error-message"
+        *ngIf="(email?.dirty || email?.touched) && email?.invalid && email?.errors?.pattern">
+          La direccion del email debe ser valida
+      </div>
+    </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Contraseña</label>
+      <input [ngClass]="{'is-valid':password?.touched && !password?.invalid,'is-invalid':password?.touched && password?.invalid}" type="password" class="form-control" formControlName="password" id="password" placeholder="Password">
+      <div class="alert-danger mr-auto ml-auto" *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+        <div class="container-error-message" *ngIf="password?.errors?.required">
+          La contraseña es requerida
+        </div>
+        <div class="container-error-message" *ngIf="password?.errors?.minlength">
+          La contraseña debe ser de al menos 6 caracteres
+        </div>
+        <div class="container-error-message" *ngIf="password?.errors?.maxlength">
+          La contraseña tiene un maximo de 36 caracteres
+        </div>
+    </div>
+    </div>
+    <button *ngIf="signInForm.valid == true; else invalido" type="submit" class="btn btn-primary mr-auto btn-lg btn-block">Sign In</button>
+    <ng-template #invalido>
+      <button type="submit" class="btn btn-secondary btn-lg btn-block" name="button" [disabled] = "true">Sign In</button>
+    </ng-template>
+  </form>
+  <div *ngIf="existError" class="alert alert-danger mr-auto col-12 text-center mt-2" role="alert">
+  <h5>{{errorMsg}}</h5>
+</div>
+</div>
